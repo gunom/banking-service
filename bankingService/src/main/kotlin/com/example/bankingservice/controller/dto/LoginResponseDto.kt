@@ -1,4 +1,5 @@
 package com.example.bankingservice.controller.dto
 
-class LoginResponseDto {
-}
+data class LoginResponseDto(
+    val accessToken: String
+)
