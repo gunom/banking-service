@@ -30,11 +30,11 @@ class JwtAuthenticationFilter(
         try {
             val jwt = getJwtFromRequest(request)
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                val userId = tokenProvider.getUserIdFromToken(jwt)
-                val userDetails: UserDetails = customUserDetailsService.loadUserByUserId(userId)
+                val claims = tokenProvider.getUserIdFromToken(jwt).getOrThrow()
+                val userDetails: UserDetails = claims["id"]?.let { customUserDetailsService.loadUserByUserId(it.toString().toLong()) } ?: throw Exception()
                 val authentication =
                     UsernamePasswordAuthenticationToken(userDetails.username, null, userDetails.authorities)
-                authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
+                authentication.details = userDetails
                 SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (ex: Exception) {
