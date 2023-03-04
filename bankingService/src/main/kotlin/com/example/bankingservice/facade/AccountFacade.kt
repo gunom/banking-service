@@ -24,8 +24,9 @@ class AccountFacade(
     fun transferMoney(userId: Long, userAccountId: Int, accountNumber: String, amount: Long) {
         val sender = userService.findById(userId)
         val receiver = accountService.findByAccountNumber(accountNumber).user
-        val lockKey = "transfer_lock_" + userId
-        val lockKey2 = "transfer_lock " + receiver.id
+
+        val lockKey = "transfer_lock_$userId"
+        val lockKey2 = "transfer_lock_${receiver.id}"
         val lock = redissonClient.getLock(lockKey)
         val lock2 = redissonClient.getLock(lockKey2)
 
@@ -35,20 +36,15 @@ class AccountFacade(
             if (!isLocked) {
                 throw RuntimeException("failed to get RLock")
             }
-            try {
-                println("lock")
-                val history = accountTransactionHistoryService.addHistory(sender, receiver, amount)
-                accountService.transferMoney(userAccountId, accountNumber, amount)
-                accountTransactionHistoryService.doneHistory(history.id)
-            } catch (e: RuntimeException) {
-                println("error")
-                throw Exception(e.message.toString())
-            }
+            val history = accountTransactionHistoryService.addHistory(sender, receiver, amount)
+            accountService.transferMoney(userAccountId, accountNumber, amount)
+            accountTransactionHistoryService.doneHistory(history.id)
         } catch (e: InterruptedException) {
             throw Exception("Thread Interrupted")
+        } catch (e: RuntimeException) {
+            throw Exception(e.message.toString())
         } finally {
             if (lock.isLocked && lock.isHeldByCurrentThread) {
-                println("unlock")
                 lock.unlock()
                 lock2.unlock()
             }
