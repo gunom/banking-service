@@ -35,6 +35,13 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
+
+    api("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.redisson:redisson:3.16.3")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.3.50")
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {

@@ -1,6 +1,7 @@
 package com.example.bankingservice.global.auth
 
 import com.example.bankingservice.domain.user.SecurityUser
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -37,13 +38,17 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun getUserIdFromToken(token: String?): Long {
-        val claims = Jwts.parserBuilder()
-            .setSigningKey(jwtSecret.toByteArray().copyOf(64))
-            .build()
-            .parseClaimsJws(token)
-            .body
-        return claims.id.toLong()
+    fun getUserIdFromToken(token: String?): Result<Claims> {
+        return kotlin.runCatching {
+            Jwts.parserBuilder()
+                .setSigningKey(jwtSecret.toByteArray().copyOf(64))
+                .build()
+                .parseClaimsJws(token)
+                .body
+        }.onFailure {
+            return Result.failure(it)
+        }
+
     }
 
     fun validateToken(authToken: String?): Boolean {

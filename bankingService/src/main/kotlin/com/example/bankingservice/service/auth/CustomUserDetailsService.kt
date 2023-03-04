@@ -1,4 +1,4 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.auth
 
 import com.example.bankingservice.domain.user.SecurityUser
 import com.example.bankingservice.domain.user.User
