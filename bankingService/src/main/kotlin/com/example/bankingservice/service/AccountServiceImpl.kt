@@ -3,20 +3,15 @@ package com.example.bankingservice.service
 import com.example.bankingservice.domain.account.Account
 import com.example.bankingservice.domain.account.AccountRepository
 import com.example.bankingservice.domain.user.User
+import com.example.bankingservice.global.exception.AccountNotFoundException
 import com.example.bankingservice.service.dto.AccountDto
 import com.example.bankingservice.utils.generateAccountNumber
-import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Service
-import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.transaction.support.DefaultTransactionDefinition
-import java.util.concurrent.TimeUnit
 import javax.transaction.Transactional
 
 @Service
 class AccountServiceImpl(
     private val accountRepository: AccountRepository,
-    private val redissonClient: RedissonClient,
-//    private val transactionManager: PlatformTransactionManager,
 ) : AccountService {
     override fun makeAccount(user: User, asset: Long): AccountDto {
         val accountList = accountRepository.findAll().map { it.accountNumber }.toSet()
@@ -52,30 +47,28 @@ class AccountServiceImpl(
     }
 
     override fun findByAccountNumber(accountNumber: String): Account {
-        return accountRepository.findByAccountNumber(accountNumber) ?: throw Exception()
+        return accountRepository.findByAccountNumber(accountNumber)
+            ?: throw AccountNotFoundException("Account with accountNumber=$accountNumber not found")
     }
 
     override fun findById(userAccountId: Int): Account {
-        return accountRepository.findById(userAccountId).orElseGet { throw Exception() }
+        return accountRepository.findById(userAccountId)
+            .orElseThrow { AccountNotFoundException("Account with id=$userAccountId not found") }
     }
 
     @Transactional
     override fun transferMoney(userAccountId: Int, accountNumber: String, amount: Long) {
-        val fromAccount = accountRepository.findById(userAccountId).orElseGet { throw Exception() }
-        val toAccount = accountRepository.findByAccountNumber(accountNumber) ?: throw Exception()
+        val fromAccount = accountRepository.findById(userAccountId)
+            .orElseThrow { AccountNotFoundException("Account with id=$userAccountId not found") }
+        val toAccount = accountRepository.findByAccountNumber(accountNumber)
+            ?: throw AccountNotFoundException("Account with accountNumber=$accountNumber not found")
+        if (fromAccount.asset < amount) {
+            throw IllegalArgumentException("Insufficient balance")
+        }
+        fromAccount.asset -= amount
+        toAccount.asset += amount
 
-//        val status = transactionManager.getTransaction(DefaultTransactionDefinition())
-                if (fromAccount.asset < amount) {
-                    throw IllegalArgumentException("Insufficient balance")
-                }
-
-                fromAccount.asset -= amount
-                toAccount.asset += amount
-
-                accountRepository.save(fromAccount)
-                accountRepository.save(toAccount)
-
-//                transactionManager.commit(status)
-
+        accountRepository.save(fromAccount)
+        accountRepository.save(toAccount)
     }
 }
