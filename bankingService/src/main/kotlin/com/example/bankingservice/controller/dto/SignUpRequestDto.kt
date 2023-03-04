@@ -1,3 +1,6 @@
 package com.example.bankingservice.controller.dto
 
-data class SignUpRequsetDto()
+data class SignUpRequestDto(
+    val email: String,
+    val password: String
+)
