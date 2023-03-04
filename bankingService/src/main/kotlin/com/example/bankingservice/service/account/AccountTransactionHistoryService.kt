@@ -1,4 +1,4 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.account
 
 import com.example.bankingservice.domain.accountTransactionHistory.AccountTransactionHistory
 import com.example.bankingservice.domain.user.User

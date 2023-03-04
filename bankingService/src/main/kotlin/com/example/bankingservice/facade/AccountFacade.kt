@@ -1,13 +1,12 @@
 package com.example.bankingservice.facade
 
-import com.example.bankingservice.service.AccountService
-import com.example.bankingservice.service.AccountTransactionHistoryService
-import com.example.bankingservice.service.UserService
+import com.example.bankingservice.service.account.AccountService
+import com.example.bankingservice.service.account.AccountTransactionHistoryService
+import com.example.bankingservice.service.user.UserService
 import com.example.bankingservice.service.dto.AccountDto
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Service
 import java.util.concurrent.TimeUnit
-import javax.transaction.Transactional
 
 @Service
 class AccountFacade(

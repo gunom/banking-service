@@ -5,18 +5,15 @@ import com.example.bankingservice.domain.account.AccountRepository
 import com.example.bankingservice.domain.user.User
 import com.example.bankingservice.domain.user.repository.UserRepository
 import com.example.bankingservice.facade.AccountFacade
-import com.example.bankingservice.service.AccountServiceImpl
+import com.example.bankingservice.service.account.impl.AccountServiceImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
-import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import java.util.stream.IntStream
 import kotlin.test.assertEquals
 

@@ -1,10 +1,11 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.account.impl
 
 import com.example.bankingservice.domain.accountTransactionHistory.AccountTransactionHistory
 import com.example.bankingservice.domain.accountTransactionHistory.AccountTransactionHistoryRepository
 import com.example.bankingservice.domain.user.User
 import com.example.bankingservice.global.enum.TransactionStatus
 import com.example.bankingservice.global.enum.TransactionStatus.PENDING
+import com.example.bankingservice.service.account.AccountTransactionHistoryService
 import org.springframework.stereotype.Service
 
 @Service

@@ -1,10 +1,11 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.user.impl
 
 import com.example.bankingservice.domain.user.User
 import com.example.bankingservice.domain.user.repository.UserRepository
 import com.example.bankingservice.global.enum.ExceptionMessage
 import com.example.bankingservice.global.exception.UserDuplicateException
 import com.example.bankingservice.service.dto.UserDto
+import com.example.bankingservice.service.user.UserService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 

@@ -1,6 +1,6 @@
 package com.example.bankingservice.global.auth
 
-import com.example.bankingservice.service.CustomUserDetailsService
+import com.example.bankingservice.service.auth.CustomUserDetailsService
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

@@ -1,9 +1,10 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.account.impl
 
 import com.example.bankingservice.domain.account.Account
 import com.example.bankingservice.domain.account.AccountRepository
 import com.example.bankingservice.domain.user.User
 import com.example.bankingservice.global.exception.AccountNotFoundException
+import com.example.bankingservice.service.account.AccountService
 import com.example.bankingservice.service.dto.AccountDto
 import com.example.bankingservice.utils.generateAccountNumber
 import org.springframework.stereotype.Service

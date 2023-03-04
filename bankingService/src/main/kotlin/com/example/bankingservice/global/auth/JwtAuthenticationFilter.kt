@@ -1,7 +1,7 @@
 package com.example.bankingservice.global.auth
 
 import com.example.bankingservice.global.enum.JWTExceptionCode
-import com.example.bankingservice.service.CustomUserDetailsService
+import com.example.bankingservice.service.auth.CustomUserDetailsService
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.MalformedJwtException

@@ -1,4 +1,5 @@
-package com.example.bankingservice.service
+package com.example.bankingservice.service.user
 
 interface UserContextService {
+    fun getUserId(): Long
 }

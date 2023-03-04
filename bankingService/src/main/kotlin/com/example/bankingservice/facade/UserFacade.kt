@@ -1,7 +1,7 @@
 package com.example.bankingservice.facade
 
-import com.example.bankingservice.service.FriendListService
-import com.example.bankingservice.service.UserService
+import com.example.bankingservice.service.user.FriendListService
+import com.example.bankingservice.service.user.UserService
 import org.springframework.stereotype.Service
 
 @Service
