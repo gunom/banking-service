@@ -35,9 +35,4 @@ class UserController(
         userFacade.addFriend(userId, friendId)
         return ResponseEntity.ok().body(ApiResponse.success(null, "Add Friend Success"))
     }
-
-    @ExceptionHandler(UserDuplicateException::class)
-    fun handlingUserDuplicate(e: UserDuplicateException): ResponseEntity<ApiResponse<Nothing>> {
-        return ResponseEntity.badRequest().body(ApiResponse.error(ExceptionMessage.USER_DUPLICATE_EXCEPTION.message))
-    }
 }
